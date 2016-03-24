@@ -86,7 +86,6 @@ def print_file_with_iter(path):
                             queue_list.put(new_path)
                         elif i['type'] == 'N':
                             print new_path
-                            raw_input('delte?')
                             result = delete_file(new_path)
                             print 'file deleted--->' + new_path + str(result)
                             with open(bucket + '_file.txt', 'a') as f:
