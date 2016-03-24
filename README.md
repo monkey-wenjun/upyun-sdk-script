@@ -9,6 +9,8 @@
     
 ## 视频教程
 
+1.删除文件：
+
 https://techs.b0.upaiyun.com/videos/cdnpage/delete_file.html
 
 
@@ -39,6 +41,8 @@ https://techs.b0.upaiyun.com/videos/cdnpage/delete_file.html
 	3 Sockets in /var/run/screen/S-fangwenjun.
 	$ screen -r test #进入已经创建的后台任务中
 ```
+
+
 ### 更新历史
 
 2016-3-24：  
