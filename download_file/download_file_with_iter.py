@@ -149,5 +149,5 @@ if __name__ == '__main__':
         path = raw_input('input a path( e.g: "/" ) : ')
         while len(path)==0:
             path = raw_input('input a path( e.g: "/" ) : ')
-        print_file_with_iter(path)
-        print str(count) + ':Done!'
+        download_file_with_iter(path)
+        print str(count)+':Done!'
