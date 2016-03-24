@@ -1,5 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
+#Auth:zhanghb、wenjun
+#Date:2016-3-14
 
 
 import requests
