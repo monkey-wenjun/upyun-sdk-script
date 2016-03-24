@@ -2,6 +2,12 @@
 
 sudo pip install requests
 
+
+###视频教程
+
+https://techs.b0.upaiyun.com/videos/cdnpage/delete_file.html
+
+
 ####删除方法:
 
 后台运行:
