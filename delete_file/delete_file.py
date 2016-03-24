@@ -6,11 +6,12 @@ import requests
 import urllib
 import Queue
 from base64 import b64encode
+import getpass
 
 # -----------------------
-bucket = ''
-username = ''
-password = ''
+bucket = raw_input("Please enter your serverName:")
+username = raw_input("Please enter your userName:")
+password = getpass.getpass("Plaser enter your Password:")
 # -----------------------
 queue = Queue.LifoQueue()
 queue_list = Queue.LifoQueue()
@@ -109,6 +110,12 @@ def delete_file(key):
 
 
 if __name__ == '__main__':
-    path = raw_input('input a path( e.g: "/" ) : ')
-    print_file_with_iter(path)
-    print "Job's Done!"
+    
+    if len(str.strip(bucket))==0 or len(str.strip(username))==0 or len(str.strip(password))==0:
+        print "401 buket or username and password  is null"
+    else:
+        path = raw_input('input a path( e.g: "/" ) : ')
+        while len(path)==0:
+            path = raw_input('input a path( e.g: "/" ) : ')
+        print_file_with_iter(path)
+        print "Job's Done!"
