@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+#coding=utf8
+import requests
+
+#这个脚本用户遍历文本文件中的URL，然后判断URL是否是404，如果是404则写入本地路径的文本文件中去
+
+def http_get_url():
+    srcpath = " "
+    dstpath = " "
+    file = open(srcpath)
+    file_str = open(dstpath, 'wb')
+    for url_path in file.readlines():
+        url = "http://xxx.b0.upaiyun.com"+url_path
+        req_url = requests.head(url)
+        if req_url.status_code ==404:
+            urls = url+"!bac"
+            req_urls = requests.head(urls)
+            if req_urls.status_code ==200
+               file_str.write(url)
+
+    file.close()
+    file_str.close()
+
+
+http_get_url()
