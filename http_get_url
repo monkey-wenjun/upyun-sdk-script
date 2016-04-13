@@ -2,12 +2,13 @@
 import requests
 
 def http_get_url():
-    srcpath = "F:\python\suntimereport_file_B.txt" 
+    srcpath = "F:\python\B.txt" 
     dstpath = "F:\python\save1.txt"
+    serverName = " "
     file = open(srcpath)
     file_str = open(dstpath, 'wb')
     for url_path in file.readlines():
-        url = "http://suntimereport.b0.upaiyun.com"+url_path.strip('\n')
+        url = "http://"+servername+".b0.upaiyun.com"+url_path.strip('\n')
         req_url = requests.head(url)
         print url
         if req_url.status_code == 404:
