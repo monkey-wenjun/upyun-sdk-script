@@ -1,23 +1,21 @@
 #!/usr/bin/env python
-#coding=utf8
 import requests
 
-#这个脚本用户遍历文本文件中的URL，然后判断URL是否是404，如果是404则改写URL为原图模式再次判断是否为200，如果为200 则写入文件
-
 def http_get_url():
-    srcpath = " "
-    dstpath = " "
-    servername = " "
+    srcpath = "F:\python\suntimereport_file_B.txt" 
+    dstpath = "F:\python\save1.txt"
     file = open(srcpath)
     file_str = open(dstpath, 'wb')
     for url_path in file.readlines():
-        url = "http://"+servername+".b0.upaiyun.com"+url_path
+        url = "http://suntimereport.b0.upaiyun.com"+url_path.strip('\n')
         req_url = requests.head(url)
-        if req_url.status_code ==404:
-            urls = url+"!bac"
-            req_urls = requests.head(urls)
-            if req_urls.status_code ==200
-               file_str.write(url)
+        print url
+        if req_url.status_code == 404:
+           se_url = url+"!bac"
+           req_se_url = requests.head(se_url)
+           if req_se_url.status_code == 200:
+           		print se_url
+           		file_str.write(url)
 
     file.close()
     file_str.close()
