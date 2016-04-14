@@ -5,8 +5,8 @@ def http_get_url():
     srcpath = "" 
     dstpath = "."
     serverName = ""
-    separator = "!"
-    secureName = c""
+    separator = ""
+    secureName = ""
     file = open(srcpath)
     file_str = open(dstpath, 'wb')
     for url_path in file.readlines():
