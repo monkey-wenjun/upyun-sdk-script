@@ -2,11 +2,11 @@
 import requests
 
 def http_get_url():
-    srcpath = "/home/fwj/Downloads/upyun-sdk-script-master/upyun-sdk-script-master/list_file/suntimereport_file.txt" 
-    dstpath = "./save1.txt"
-    serverName = "suntimeroport"
+    srcpath = "" 
+    dstpath = "."
+    serverName = ""
     separator = "!"
-    secureName = "bac"
+    secureName = c""
     file = open(srcpath)
     file_str = open(dstpath, 'wb')
     for url_path in file.readlines():
