@@ -3,9 +3,9 @@ import requests
 import time
 
 def http_get_url():
-    srcpath = "D:\suntimereport_file.txt" 
+    srcpath = "D:\a.txt" 
     dstpath = "D:\save.txt"
-    serverName = "suntimereport"
+    serverName = "aaa"
     file_str = open(dstpath, 'wb')
     count = 0
     with open(srcpath,'r') as f:
