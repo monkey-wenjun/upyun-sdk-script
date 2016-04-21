@@ -23,7 +23,7 @@ def http_get_url():
 	        print count,url,times		
 		print restatus
 	    		if restatus == 404:
-				 file_str.write(url)
+				 file_str.write(url+"\n")
 
     file.close()
     file_str.close()
