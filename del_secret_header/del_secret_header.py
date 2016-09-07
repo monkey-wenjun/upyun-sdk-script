@@ -6,7 +6,6 @@ import requests
 import urllib
 import Queue
 import getpass
-import os
 
 # -----------------------
 bucket = raw_input("Please enter your serverName:")
