@@ -13,9 +13,9 @@ import datetime
 import getpass
 
 # -----------------------
-bucket = raw_input("请输入您的服务名:")
-username = raw_input("请输入与您服务名对应的操作员:")
-password = getpass.getpass("请输入操作员密码[密码不会显示]:")
+bucket = raw_input("Please enter your serverName:")
+username = raw_input("Please enter your userName:")
+password = getpass.getpass("Plaser enter your Password:")
 # -----------------------
 
 queue = Queue.LifoQueue()
@@ -124,6 +124,6 @@ def print_file_with_iter(path):
 
 
 if __name__ == '__main__':
-    path = raw_input("请输入需要刷新的文件路径[例如：刷新根目录下所有文件，则输入/]:")
+    path = raw_input("input path:")
     print_file_with_iter(path)
     print '刷新全部完成'
