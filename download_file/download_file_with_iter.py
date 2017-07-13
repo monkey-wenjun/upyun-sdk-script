@@ -34,7 +34,7 @@ def do_http_request(method, key, params, of):
     if params is not None:
         if params['x-list-iter'] is not None or not 'g2gCZAAEbmV4dGQAA2VvZg':
             headers['X-List-Iter'] = params['x-list-iter']
-    headers['x-list-limit'] = 300
+    headers['x-list-limit'] = '300'
 
     URL = "http://v0.api.upyun.com" + uri
     requests.adapters.DEFAULT_RETRIES = 5

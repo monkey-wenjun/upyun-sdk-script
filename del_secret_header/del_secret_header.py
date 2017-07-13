@@ -26,7 +26,7 @@ def do_http_request(method, key, upyun_iter):
     headers['Authorization'] = "Basic " + b64encode(username + ':' + password)
     headers['X-Upyun-Meta-Secret'] = "true"
     headers['User-Agent'] = "uptechs"
-    headers['X-List-Limit'] = 300
+    headers['X-List-Limit'] = '300'
     if upyun_iter is not None or upyun_iter is not 'g2gCZAAEbmV4dGQAA2VvZg':
         headers['x-list-iter'] = upyun_iter
 

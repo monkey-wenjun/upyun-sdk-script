@@ -27,7 +27,7 @@ def do_http_request(method, key, upyun_iter):
     headers = {}
     headers['Authorization'] = "Basic " + b64encode(username + ':' + password)
     headers['User-Agent'] = "zhanghb-is-here"
-    headers['X-List-Limit'] = 2
+    headers['X-List-Limit'] = '2'
     if method is not 'DELETE':
         if upyun_iter is not None or upyun_iter is not 'g2gCZAAEbmV4dGQAA2VvZg':
             headers['x-list-iter'] = upyun_iter
