@@ -49,5 +49,9 @@ https://techs.b0.upaiyun.com/videos/cdnpage/delete_file.html
 
 1.增加用户交互功能，无需进入脚本输入参数   
 2.输入密码不可见   
-3.修复2处可能抛异常的地方   
+3.修复2处可能抛异常的地方 
+
+2017-07-12:
+
+1. 因接口变动, headers['X-List-Limit'] 字段里面的值修改为str类型  
 
