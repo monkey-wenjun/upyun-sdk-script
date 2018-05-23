@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-#Auth:zhanghb、wenjun
-#Date:2016-3-14
+# Auth:zhanghb、wenjun
+# Date:2016-3-14
 
 
 import requests
@@ -27,7 +27,7 @@ def do_http_request(method, key, upyun_iter):
     headers = {}
     headers['Authorization'] = "Basic " + b64encode(username + ':' + password)
     headers['User-Agent'] = "zhanghb-is-here"
-    headers['X-List-Limit'] = '2'
+    headers['X-List-Limit'] = '300'
     if method is not 'DELETE':
         if upyun_iter is not None or upyun_iter is not 'g2gCZAAEbmV4dGQAA2VvZg':
             headers['x-list-iter'] = upyun_iter
@@ -112,12 +112,12 @@ def delete_file(key):
 
 
 if __name__ == '__main__':
-    
-    if len(str.strip(bucket))==0 or len(str.strip(username))==0 or len(str.strip(password))==0:
+
+    if len(str.strip(bucket)) == 0 or len(str.strip(username)) == 0 or len(str.strip(password)) == 0:
         print "401 buket or username and password  is null"
     else:
         path = raw_input('input a path( e.g: "/" ) : ')
-        while len(path)==0:
+        while len(path) == 0:
             path = raw_input('input a path( e.g: "/" ) : ')
         print_file_with_iter(path)
         print "Job's Done!"

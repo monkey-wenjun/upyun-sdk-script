@@ -10,7 +10,6 @@ import time
 import getpass
 
 # -----------------------
-# -----------------------
 bucket = raw_input("Please enter your serverName:")
 username = raw_input("Please enter your userName:")
 password = getpass.getpass("Plaser enter your Password:")
@@ -143,11 +142,11 @@ def download_file_with_iter(path):
 
 
 if __name__ == '__main__':
-    if len(str.strip(bucket))==0 or len(str.strip(username))==0 or len(str.strip(password))==0:
+    if len(str.strip(bucket)) == 0 or len(str.strip(username)) == 0 or len(str.strip(password)) == 0:
         print "401 buket or username and password  is null"
     else:
         path = raw_input('input a path( e.g: "/" ) : ')
-        while len(path)==0:
+        while len(path) == 0:
             path = raw_input('input a path( e.g: "/" ) : ')
         download_file_with_iter(path)
-        print str(count)+':Done!'
+        print str(count) + ':Done!'
