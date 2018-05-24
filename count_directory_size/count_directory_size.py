@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-
+from __future__ import division
 from base64 import b64encode
 import requests
 import urllib
@@ -11,19 +11,10 @@ bucket = ''
 username = ''
 password = ''
 
-path = ''
+path = '/'
 # -----------------------
+
 queue = Queue.LifoQueue()
-queue_list = Queue.LifoQueue()
-
-
-def record_request(url, status):
-    if status:
-        with open('deleted_file_list.txt', 'a') as file:
-            file.write(url + '\n')
-    else:
-        with open('list_failed_path.txt', 'a') as failed_file:
-            failed_file.write(url + '\n')
 
 
 def do_http_request(method, key, upyun_iter):
@@ -33,12 +24,11 @@ def do_http_request(method, key, upyun_iter):
     uri = urllib.quote(uri)
     headers = {
         'Authorization': 'Basic ' + b64encode(username + ':' + password),
-        'User-Agent': 'up-python-delete-script',
+        'User-Agent': 'up-python-script',
         'X-List-Limit': '300'
     }
-    if method is not 'DELETE':
-        if upyun_iter is not None or upyun_iter is not 'g2gCZAAEbmV4dGQAA2VvZg':
-            headers['x-list-iter'] = upyun_iter
+    if upyun_iter is not None or upyun_iter is not 'g2gCZAAEbmV4dGQAA2VvZg':
+        headers['x-list-iter'] = upyun_iter
 
     url = "http://v0.api.upyun.com" + uri
     requests.adapters.DEFAULT_RETRIES = 5
@@ -46,7 +36,7 @@ def do_http_request(method, key, upyun_iter):
     try:
         response = session.request(method, url, headers=headers, timeout=30)
         status = response.status_code
-        if status == 200 and method != 'DELETE':
+        if status == 200:
             content = response.content
             try:
                 iter_header = response.headers['x-upyun-list-iter']
@@ -57,13 +47,10 @@ def do_http_request(method, key, upyun_iter):
                 'iter_header': iter_header
             }
             return data
-        elif status == 200 and method == 'DELETE':
-            return True
         else:
-            print 'status: ' + str(status) + '--->' + url
-            record_request(uri, False)
+            return None
     except Exception as e:
-        record_request(uri, False)
+        return None
 
 
 def getlist(key, upyun_iter):
@@ -77,8 +64,9 @@ def getlist(key, upyun_iter):
     return content
 
 
-def list_file_with_iter(path):
+def count_dir_size(path):
     upyun_iter = None
+    size = 0
     while True:
         while upyun_iter != 'g2gCZAAEbmV4dGQAA2VvZg':
             res = getlist(path, upyun_iter)
@@ -87,17 +75,13 @@ def list_file_with_iter(path):
                 for i in res[:-1]:
                     try:
                         if not i['name']:
-                            if delete_file(path):
-                                print 'folder deleted' + path
                             continue
                         new_path = path + i['name'] if path == '/' else path + '/' + i['name']
                         if i['type'] == 'F':
                             queue.put(new_path)
-                            queue_list.put(new_path)
                         elif i['type'] == 'N':
-                            result = delete_file(new_path)
-                            print 'file deleted--->' + new_path
-                            record_request(new_path, True)
+                            print 'size ++ ----> {0} B'.format(size)
+                            size += int(i['size'])
                     except Exception as e:
                         print e
             else:
@@ -111,16 +95,11 @@ def list_file_with_iter(path):
                 upyun_iter = None
                 queue.task_done()
             else:
-                while not queue_list.empty():
-                    delete_file(queue_list.get())
-                    queue_list.task_done()
                 break
-
-
-def delete_file(key):
-    return do_http_request('DELETE', key, None)
+    return size / 1024 / 1024 / 1024
 
 
 if __name__ == '__main__':
-    list_file_with_iter(path)
+    size = count_dir_size(path)
     print "Job's Done!"
+    print 'your path: "{0}" , total size: "{1}" GB'.format(path, size)

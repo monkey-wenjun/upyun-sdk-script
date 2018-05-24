@@ -8,13 +8,23 @@ import Queue
 import getpass
 
 # -----------------------
-bucket = raw_input("Please enter your serverName:")
-username = raw_input("Please enter your userName:")
-password = getpass.getpass("Plaser enter your Password:")
+bucket = ''
+username = ''
+password = ''
+
+path = ''
 # -----------------------
 
 queue = Queue.LifoQueue()
-count = 0
+
+
+def record_request(url, status):
+    if status:
+        with open('file_list.txt', 'a') as file:
+            file.write(url + '\n')
+    else:
+        with open('list_failed_path.txt', 'a') as failed_file:
+            failed_file.write(url + '\n')
 
 
 def do_http_request(method, key, upyun_iter):
@@ -22,10 +32,11 @@ def do_http_request(method, key, upyun_iter):
     if isinstance(uri, unicode):
         uri = uri.encode('utf-8')
     uri = urllib.quote(uri)
-    headers = {}
-    headers['Authorization'] = "Basic " + b64encode(username + ':' + password)
-    headers['User-Agent'] = "uptechs"
-    headers['X-List-Limit'] = '300'
+    headers = {
+        'Authorization': 'Basic ' + b64encode(username + ':' + password),
+        'User-Agent': 'up-python-script',
+        'X-List-Limit': '300'
+    }
     if upyun_iter is not None or upyun_iter is not 'g2gCZAAEbmV4dGQAA2VvZg':
         headers['x-list-iter'] = upyun_iter
 
@@ -41,23 +52,27 @@ def do_http_request(method, key, upyun_iter):
                 iter_header = response.headers['x-upyun-list-iter']
             except Exception as e:
                 iter_header = 'g2gCZAAEbmV4dGQAA2VvZg'
-            return content + "`" + str(iter_header)
+            data = {
+                'content': content,
+                'iter_header': iter_header
+            }
+            return data
         else:
-            print 'status: ' + str(status) + '--->' + url
-            print 'message: ' + str(response.headers['X-Error-Code'])
+            record_request(uri, False)
             return None
     except Exception as e:
-        pass
+        record_request(uri, False)
+        return None
 
 
 def getlist(key, upyun_iter):
-    content = do_http_request('GET', key, upyun_iter)
-    if not content:
+    result = do_http_request('GET', key, upyun_iter)
+    if not result:
         return None
-    content = content.split("`")
-    items = content[0].split('\n')
+    content = result['content']
+    items = content.split('\n')
     content = [dict(zip(['name', 'type', 'size', 'time'],
-                        x.split('\t'))) for x in items] + content[1].split()
+                        x.split('\t'))) for x in items] + result['iter_header'].split()
     return content
 
 
@@ -77,10 +92,14 @@ def print_file_with_iter(path):
                             queue.put(new_path)
                         elif i['type'] == 'N':
                             print new_path
-                            with open(bucket + '_file.txt', 'a') as f:
-                                f.write(new_path + '\n')
+                            record_request(new_path, True)
                     except Exception as e:
                         print e
+            else:
+                if not queue.empty():
+                    path = queue.get()
+                    upyun_iter = None
+                    queue.task_done()
         else:
             if not queue.empty():
                 path = queue.get()
@@ -91,11 +110,5 @@ def print_file_with_iter(path):
 
 
 if __name__ == '__main__':
-    if len(str.strip(bucket)) == 0 or len(str.strip(username)) == 0 or len(str.strip(password)) == 0:
-        print "401 buket or username and password  is null"
-    else:
-        path = raw_input('input a path( e.g: "/" ) : ')
-        while len(path) == 0:
-            path = raw_input('input a path( e.g: "/" ) : ')
-        print_file_with_iter(path)
-        print "Job's Done!"
+    print_file_with_iter(path)
+    print "Job's Done!"
