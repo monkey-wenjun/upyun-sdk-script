@@ -10,6 +10,18 @@ https://techs.b0.upaiyun.com/videos/cdnpage/delete_file.html
 
 ####删除方法:
 
+```
+bucket = ''
+username = ''
+password = ''
+
+path = ''
+```
+
+在脚本中填入上述参数。分别是服务名，操作员名，操作员密码，和待删除的路径。
+
+然后 python delete_file.py 进行删除.
+
 后台运行:
 
 1.Centos/RedHad
@@ -37,11 +49,6 @@ https://techs.b0.upaiyun.com/videos/cdnpage/delete_file.html
 	3 Sockets in /var/run/screen/S-fangwenjun.
 	$ screen -r test #进入已经创建的后台任务中
 ```
-### 更新历史
 
-2016-3-24：     
-1.增加用户交互功能，无需进入脚本输入参数    
-2.输入密码不可见   
-3.修复2处可能抛异常的地方    
 
 
