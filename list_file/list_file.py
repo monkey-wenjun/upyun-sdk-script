@@ -5,7 +5,6 @@ from base64 import b64encode
 import requests
 import urllib
 import Queue
-import getpass
 
 # -----------------------
 bucket = ''
