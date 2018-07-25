@@ -23,6 +23,10 @@ target_password = ''  # (必填) 文件迁移的目标服务名的授权操作�
 save_as_prefix = ''  # (选填) 目标服务名的保存路径的前置路径 (如果不填写, 默认迁移后的路径和原路径相同)
 # --------------------------------------------
 
+notify_url = 'http://your_notify_url'  # 将回调地址改成自己的服务器地址, 用来接收又拍云 POST 过来的异步拉取结果
+
+# --------------------------------------------
+
 
 queue = Queue.LifoQueue()
 
@@ -37,7 +41,7 @@ def push_tasks(url, up):
         }
     ]
 
-    result = up.put_tasks(fetch_data, 'http://notify.c.upyun.com/echo', 'spiderman')
+    result = up.put_tasks(fetch_data, notify_url, 'spiderman')
     return result
 
 
