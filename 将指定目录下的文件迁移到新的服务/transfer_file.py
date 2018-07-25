@@ -76,10 +76,8 @@ def do_http_request(method, key, upyun_iter):
             }
             return data
         else:
-            record_request(uri, False)
             return None
     except Exception as e:
-        record_request(uri, False)
         return None
 
 
@@ -115,7 +113,7 @@ def get_list(path):
                                 new_path = save_as_prefix + new_path
                                 push_tasks(new_path, up)
                     except Exception as e:
-                        print e + '?????'
+                        print e
             else:
                 if not queue.empty():
                     path = queue.get()
